@@ -89,6 +89,16 @@ app.put("/blogs/:id", (req, res) => {
     });
 });
 
+//DESTORY ROUTE
+app.delete("/blogs/:id", (req, res) => {
+    // destroy blog
+    Blog.findByIdAndRemove(req.params.id, err => {
+        if(err) res.redirect("/blogs");
+        res.redirect("/blogs");
+    })
+    // redirect somewhere
+});
+
 app.listen(3000, (err) => {
     if (err) console.log(err);
     console.log("Server is listening to 3000!");

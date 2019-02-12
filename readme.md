@@ -26,3 +26,7 @@
 * Add Update Route
 * Add Update Form
 * Add Method-Override
+
+# Detroy
+* Add Destroy Route
+* Add Edit and Destory links
