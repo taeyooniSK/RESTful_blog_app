@@ -30,3 +30,7 @@
 # Detroy
 * Add Destroy Route
 * Add Edit and Destory links
+
+# Final Updates
+* Sanitize blog body
+* Style Index

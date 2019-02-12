@@ -1,5 +1,6 @@
 const bodyParser = require("body-parser"),
  methodOverride = require("method-override"),
+ expressSanitizer = require("express-sanitizer"),
  mongoose = require("mongoose"),      
  express = require("express"),
  app = express();
@@ -11,6 +12,7 @@ app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressSanitizer());
 app.use(methodOverride("_method")); // 내가 원하는 단어로 써도 되긴하지만 이게 가장 보편적
 
 // MONGOOSE/MODEL CONFIG
@@ -48,6 +50,10 @@ app.get("/blogs/new", (req, res) => {
 // CREATE ROUTE
 app.post("/blogs", (req, res) => {
     // create blog
+    console.log(req.body);
+    req.body.blog.body = req.sanitize(req.body.blog.body);
+    console.log("==================");
+    console.log(req.body);
     Blog.create(req.body.blog, (err, newBlog) => {
         if (err) console.log(err);
 
@@ -83,6 +89,7 @@ app.get("/blogs/:id/edit", (req, res) => {
 
 // UPDATE ROUTE 
 app.put("/blogs/:id", (req, res) => {
+    req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog) => {
         if (err) res.redirect("/blogs");
         res.redirect(`/blogs/${req.params.id}`);
